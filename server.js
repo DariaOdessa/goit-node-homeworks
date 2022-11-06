@@ -4,7 +4,7 @@ const app = require("./app");
 
 const { DB_HOST, PORT = 3000 } = process.env;
 
-async function main() {
+(async function () {
   try {
     if (!DB_HOST) {
       throw new Error("DB_HOST not set!");
@@ -21,5 +21,4 @@ async function main() {
     console.error("Error:", error.message);
     process.exit(1);
   }
-}
-main();
+})();
