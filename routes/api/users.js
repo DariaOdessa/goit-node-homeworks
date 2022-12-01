@@ -4,6 +4,7 @@ const {
   joiSignupSchema,
   joiLoginSchema,
   joiUpdateSubscriptionSchema,
+  joiEmailShema,
 } = require("../../models/user");
 const { users: ctrl } = require("../../controllers");
 const { validation, ctrlWrapper, auth, upload } = require("../../middlewares");
@@ -34,6 +35,10 @@ router.patch(
 
 router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
 
-router.post("/verify", ctrlWrapper(ctrl.verifyEmailResend));
+router.post(
+  "/verify",
+  validation(joiEmailShema),
+  ctrlWrapper(ctrl.verifyEmailResend)
+);
 
 module.exports = router;

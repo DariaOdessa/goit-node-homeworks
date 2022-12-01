@@ -63,6 +63,10 @@ const joiUpdateSubscriptionSchema = Joi.object({
   subscription: Joi.string().valid("starter", "pro", "business").required(),
 });
 
+const joiEmailShema = Joi.object({
+  email: Joi.string().email({ minDomainSegments: 2 }).required(),
+});
+
 const User = model("user", userSchema);
 
 module.exports = {
@@ -70,4 +74,5 @@ module.exports = {
   joiSignupSchema,
   joiLoginSchema,
   joiUpdateSubscriptionSchema,
+  joiEmailShema,
 };
