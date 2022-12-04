@@ -1,4 +1,4 @@
-const { Unauthorized } = require("http-errors");
+const { Unauthorized, BadRequest } = require("http-errors");
 const jwt = require("jsonwebtoken");
 const { User } = require("../../models");
 const { SECRET_KEY } = process.env;
@@ -9,6 +9,9 @@ const login = async (req, res) => {
   const { avatarURL } = user;
   if (!user || !user.comparePassword(password)) {
     throw new Unauthorized("Email or password is wrong");
+  }
+  if (!user.verify) {
+    throw BadRequest("Email not verify");
   }
   const payload = {
     id: user._id,
