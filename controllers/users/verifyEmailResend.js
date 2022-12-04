@@ -1,4 +1,4 @@
-const { BadRequest } = require("http-errors");
+const { NotFound, BadRequest } = require("http-errors");
 const { sendEmail } = require("../../helpers");
 
 const { User } = require("../../models");
@@ -6,8 +6,8 @@ const { User } = require("../../models");
 const verifyEmailResend = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
-  if (!email) {
-    throw BadRequest("missing required field email");
+  if (!user) {
+    throw NotFound("User not found");
   }
   if (user.verify) {
     throw BadRequest("Verification has already been passed");
